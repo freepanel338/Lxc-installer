@@ -1,96 +1,57 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-#================================================================
-#   PRIMENEXUS - ADVANCED LXC/LXD VIRTUALIZATION ENGINE
-#   Copyright (c) 2024 PrimeNexus. All Rights Reserved.
-#   Optimized for: Ubuntu & Debian Distributions
-#================================================================
+#=========================================================
+#  An Advanced Lxc tool
+#  credit:hoping
+#   Author: PrimeNexus
+#=========================================================
 
-# --- PrimeNexus Professional Palette (TrueColor/256-bit) ---
-# These use muted, modern tones instead of bright "neon" colors
-PN_NAVY="\e[38;5;25m"
-PN_SKY="\e[38;5;117m"
-PN_SLATE="\e[38;5;245m"
-PN_EMERALD="\e[38;5;150m"
-PN_AMBER="\e[38;5;216m"
-PN_CORAL="\e[38;5;203m"
-
-# --- Style Definitions ---
+# --- Advanced Colors and Styles ---
+GREEN="\e[32m"
+YELLOW="\e[33m"
+CYAN="\e[36m"
+RED="\e[31m"
+BLUE="\e[34m"
+MAGENTA="\e[35m"
+WHITE="\e[97m"
 BOLD="\e[1m"
 DIM="\e[2m"
 ITALIC="\e[3m"
 UNDERLINE="\e[4m"
+BLINK="\e[5m"
 RESET="\e[0m"
 
-# --- Modern Color Aliases (Mapped for script compatibility) ---
-BLUE="${PN_NAVY}${BOLD}"
-CYAN="${PN_SKY}${BOLD}"
-GREEN="${PN_EMERALD}"
-YELLOW="${PN_AMBER}"
-RED="${PN_CORAL}"
-MAGENTA="\e[38;5;176m"
-WHITE="\e[38;5;255m"
+# Colorful background for better visual appeal
+BG_BLUE="\e[44m"
+BG_GREEN="\e[42m"
+BG_YELLOW="\e[43m"
+BG_RED="\e[41m"
+BG_MAGENTA="\e[45m"
+BG_CYAN="\e[46m"
 
-# --- Premium Background Accents ---
-BG_BLUE="\e[48;5;25m"
-BG_CYAN="\e[48;5;117m"
-BG_GREEN="\e[48;5;150m"
-BG_RED="\e[48;5;203m"
-
-# --- Branded Header ---
-clear
-echo -e "${PN_NAVY}${BOLD}"
-cat << "EOF"
-  _____      _             _   _                      
-
- |  __ \    (_)           | \ | |                     
- | |__) | __ _ _ __ ___   |  \| | _____  ___   _ ___  
- |  ___/ '__| | '_ ` _ \  | . \ |/ _ \ \/ / | | / __| 
- | |   | |  | | | | | | | | |\  |  __/>  <| |_| \__ \ 
- |_|   |_|  |_|_| |_| |_| |_| \_|\___/_/\_\\__,_|___/ 
-                                                       
-EOF
-echo -e "${PN_SLATE}System Deployment via ${PN_SKY}${BOLD}PrimeNexus${RESET}"
-echo -e "${PN_SLATE}─────────────────────────────────────────────────────${RESET}"
-
-# --- PrimeNexus Terminal Context ---
-# Automatically detects terminal size for proper UI scaling
+# Terminal dimensions
 TERM_WIDTH=$(tput cols 2>/dev/null || echo 80)
 TERM_HEIGHT=$(tput lines 2>/dev/null || echo 24)
 
-# --- Deployment Configuration ---
-# Moved to a more professional naming convention
-PN_LOG="/var/log/primenexus_deploy.log"
-MAX_ATTEMPTS=3
-RETRY_INTERVAL=5
+# --- Installation Configuration ---
+INSTALL_LOG="/tmp/lxd_installer.log"
+MAX_RETRIES=3
+RETRY_DELAY=5
 
-# --- Secure Logging Engine ---
+# Logging functions
 init_log() {
-    # Attempt to create log with sudo if normal user fails
-    {
-        echo "=====================================================" 
-        echo "   PRIME NEXUS - DEPLOYMENT LOG"
-        echo "   Session ID: $(head /dev/urandom | tr -dc A-Z0-9 | head -c 8)"
-        echo "   Timestamp:  $(date '+%Y-%m-%d %H:%M:%S')"
-        echo "   Operator:   $(whoami)"
-        echo "   Platform:   $(lsb_release -ds 2>/dev/null || echo "Generic Linux")"
-        echo "====================================================="
-    } > "$PN_LOG" 2>/dev/null || PN_LOG="/tmp/primenexus.log"
-    
-    # Finalize log location
-    log_message "INFO" "Logging initialized at $PN_LOG"
+    echo "=== LXC/LXD Installation Log ===" > "$INSTALL_LOG"
+    echo "Started: $(date)" >> "$INSTALL_LOG"
+    echo "User: $(whoami)" >> "$INSTALL_LOG"
+    echo "OS: $(lsb_release -d 2>/dev/null | cut -f2 || echo "Unknown")" >> "$INSTALL_LOG"
 }
 
 log_message() {
     local level="$1"
     local message="$2"
-    # Format: [HH:MM:SS] [LEVEL] Message
-    echo "[$(date '+%H:%M:%S')] [${level}] ${message}" >> "$PN_LOG"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$level] $message" >> "$INSTALL_LOG"
 }
-
-# --- Quick Initialization ---
-init_log
 
 # --- Advanced Progress Bar with Multiple Styles ---
 _progress_bar() {
@@ -343,7 +304,7 @@ ${RESET}
 EOF
 
     # Animated subtitle with rainbow effect
-    local subtitle="AUTO LXC + LXD INSTALLER MADE WITH ❤️ BY PRIMENEXUS"
+    local subtitle="AUTO LXC + LXD INSTALLER MADE WITH ❤️ BY PrimeNexus"
     local rainbow_colors=("$RED" "$YELLOW" "$GREEN" "$CYAN" "$BLUE" "$MAGENTA")
     
     printf "\n"
@@ -369,7 +330,7 @@ run_with_spinner() {
     local style_index=$((RANDOM % ${#styles[@]}))
     local style="${styles[style_index]}"
     
-  MAX_RETRIES=${MAX_RETRIES:-3}
+    while [ $retry_count -le $MAX_RETRIES ]; do
         _start_spinner "$desc" "$style"
         
         if "${cmd[@]}" >> "$INSTALL_LOG" 2>&1; then
