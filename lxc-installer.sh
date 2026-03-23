@@ -1,59 +1,96 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-#=========================================================
-#   LXC INSTALLER MADE BY PrimeNexus
-#    Credit HopingBoyz
-#   Owner: PrimeNexus
-#=========================================================
+#================================================================
+#   PRIMENEXUS - ADVANCED LXC/LXD VIRTUALIZATION ENGINE
+#   Copyright (c) 2024 PrimeNexus. All Rights Reserved.
+#   Optimized for: Ubuntu & Debian Distributions
+#================================================================
 
-# --- Modern Professional Palette ---
-# Using 256-bit/TrueColor compatible codes for a cleaner look
-PRIMARY="\e[38;5;75m"    # Soft Steel Blue
-SECONDARY="\e[38;5;176m"  # Dusty Pink/Lavender
-SUCCESS="\e[38;5;150m"    # Sage Green
-WARNING="\e[38;5;216m"    # Soft Orange/Peach
-DANGER="\e[38;5;203m"     # Muted Coral Red
-INFO="\e[38;5;123m"       # Electric Cyan
-HIGHLIGHT="\e[38;5;228m"  # Pale Vanilla
+# --- PrimeNexus Professional Palette (TrueColor/256-bit) ---
+# These use muted, modern tones instead of bright "neon" colors
+PN_NAVY="\e[38;5;25m"
+PN_SKY="\e[38;5;117m"
+PN_SLATE="\e[38;5;245m"
+PN_EMERALD="\e[38;5;150m"
+PN_AMBER="\e[38;5;216m"
+PN_CORAL="\e[38;5;203m"
 
-# --- Styles ---
+# --- Style Definitions ---
 BOLD="\e[1m"
 DIM="\e[2m"
 ITALIC="\e[3m"
 UNDERLINE="\e[4m"
 RESET="\e[0m"
 
-# Example Usage:
-echo -e "${PRIMARY}${BOLD}SCANNING:${RESET} ${INFO}System files...${RESET}"
-echo -e "${SUCCESS}SUCCESS:${RESET} Update complete."
+# --- Modern Color Aliases (Mapped for script compatibility) ---
+BLUE="${PN_NAVY}${BOLD}"
+CYAN="${PN_SKY}${BOLD}"
+GREEN="${PN_EMERALD}"
+YELLOW="${PN_AMBER}"
+RED="${PN_CORAL}"
+MAGENTA="\e[38;5;176m"
+WHITE="\e[38;5;255m"
 
+# --- Premium Background Accents ---
+BG_BLUE="\e[48;5;25m"
+BG_CYAN="\e[48;5;117m"
+BG_GREEN="\e[48;5;150m"
+BG_RED="\e[48;5;203m"
 
-# Colorful background for better visual appeal
-BG_BLUE="\e[44m"
+# --- Branded Header ---
+clear
+echo -e "${PN_NAVY}${BOLD}"
+cat << "EOF"
+  _____      _             _   _                      
 
-# Terminal dimensions
+ |  __ \    (_)           | \ | |                     
+ | |__) | __ _ _ __ ___   |  \| | _____  ___   _ ___  
+ |  ___/ '__| | '_ ` _ \  | . \ |/ _ \ \/ / | | / __| 
+ | |   | |  | | | | | | | | |\  |  __/>  <| |_| \__ \ 
+ |_|   |_|  |_|_| |_| |_| |_| \_|\___/_/\_\\__,_|___/ 
+                                                       
+EOF
+echo -e "${PN_SLATE}System Deployment via ${PN_SKY}${BOLD}PrimeNexus${RESET}"
+echo -e "${PN_SLATE}─────────────────────────────────────────────────────${RESET}"
+
+# --- PrimeNexus Terminal Context ---
+# Automatically detects terminal size for proper UI scaling
 TERM_WIDTH=$(tput cols 2>/dev/null || echo 80)
 TERM_HEIGHT=$(tput lines 2>/dev/null || echo 24)
 
-# --- Installation Configuration ---
-INSTALL_LOG="/tmp/lxd_installer.log"
-MAX_RETRIES=3
-RETRY_DELAY=5
+# --- Deployment Configuration ---
+# Moved to a more professional naming convention
+PN_LOG="/var/log/primenexus_deploy.log"
+MAX_ATTEMPTS=3
+RETRY_INTERVAL=5
 
-# Logging functions
+# --- Secure Logging Engine ---
 init_log() {
-    echo "=== LXC/LXD Installation Log ===" > "$INSTALL_LOG"
-    echo "Started: $(date)" >> "$INSTALL_LOG"
-    echo "User: $(whoami)" >> "$INSTALL_LOG"
-    echo "OS: $(lsb_release -d 2>/dev/null | cut -f2 || echo "Unknown")" >> "$INSTALL_LOG"
+    # Attempt to create log with sudo if normal user fails
+    {
+        echo "=====================================================" 
+        echo "   PRIME NEXUS - DEPLOYMENT LOG"
+        echo "   Session ID: $(head /dev/urandom | tr -dc A-Z0-9 | head -c 8)"
+        echo "   Timestamp:  $(date '+%Y-%m-%d %H:%M:%S')"
+        echo "   Operator:   $(whoami)"
+        echo "   Platform:   $(lsb_release -ds 2>/dev/null || echo "Generic Linux")"
+        echo "====================================================="
+    } > "$PN_LOG" 2>/dev/null || PN_LOG="/tmp/primenexus.log"
+    
+    # Finalize log location
+    log_message "INFO" "Logging initialized at $PN_LOG"
 }
 
 log_message() {
     local level="$1"
     local message="$2"
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$level] $message" >> "$INSTALL_LOG"
+    # Format: [HH:MM:SS] [LEVEL] Message
+    echo "[$(date '+%H:%M:%S')] [${level}] ${message}" >> "$PN_LOG"
 }
+
+# --- Quick Initialization ---
+init_log
 
 # --- Advanced Progress Bar with Multiple Styles ---
 _progress_bar() {
@@ -295,15 +332,6 @@ show_animated_header() {
     
     # ASCII Art Header with multiple styles
     cat <<'EOF'
-# --- Professional Gradient Palette ---
-BLUE_1="\e[38;5;25m"   # Deep Blue
-BLUE_2="\e[38;5;33m"   # Royal Blue
-BLUE_3="\e[38;5;39m"   # Sky Blue
-CYAN_1="\e[38;5;45m"   # Soft Cyan
-CYAN_2="\e[38;5;51m"   # Bright Cyan
-BOLD="\e[1m"
-RESET="\e[0m"
-
 ${BLUE}${BOLD}
   _      __   _______    _____ _   _  _____ _______       _      _      ______ _____  
  | |     \ \ / / ____|  |_   _| \ | |/ ____|__   __|/\   | |    | |    |  ____|  __ \ 
@@ -312,32 +340,19 @@ ${BLUE}${BOLD}
  | |____  / . \ |____    _| |_| |\  |____) |  | |/ ____ \| |____| |____| |____| | \ \ 
  |______|/_/ \_\_____|  |_____|_| \_|_____/   |_/_/    \_\______|______|______|_|  \_\
 ${RESET}
-efo
+EOF
 
     # Animated subtitle with rainbow effect
-    local subtitle="AUTO LXC + LXD INSTALLER MADE WITH ❤️ BY PrimeNexus"
+    local subtitle="AUTO LXC + LXD INSTALLER MADE WITH ❤️ BY PRIMENEXUS"
     local rainbow_colors=("$RED" "$YELLOW" "$GREEN" "$CYAN" "$BLUE" "$MAGENTA")
     
-    # --- Modern Professional Colors ---
-PRIMARY="\e[38;5;75m"    # Steel Blue
-INFO="\e[38;5;123m"       # Cyan
-BOLD="\e[1m"
-RESET="\e[0m"
-
-# --- Updated Subtitle Loop ---
-printf "\n"
-for ((i=0; i<${#subtitle}; i++)); do
-    # Alternate between Cyan and Blue every few characters for a "shimmer" effect
-    if (( (i / 3) % 2 == 0 )); then
-        color="${INFO}"
-    else
-        color="${PRIMARY}"
-    fi
-    
-    printf "%b%s" "${color}${BOLD}" "${subtitle:$i:1}"
-    sleep 0.03
-done
-printf "${RESET}\n"
+    printf "\n"
+    for ((i=0; i<${#subtitle}; i++)); do
+        local color_index=$((i % ${#rainbow_colors[@]}))
+        printf "%b%s" "${rainbow_colors[color_index]}${BOLD}" "${subtitle:$i:1}"
+        sleep 0.03
+    done
+    printf "${RESET}\n\n"
     
     _progress_bar 2 "pulse" "Initializing"
 }
@@ -389,18 +404,11 @@ show_system_info() {
     local mem_info=$(free -h 2>/dev/null | awk '/^Mem:/ {print $2}' || echo "Unknown")
     local disk_info=$(df -h / 2>/dev/null | awk 'NR==2 {print $4}' || echo "Unknown")
     
-   # --- Modern Info Colors ---
-LABEL="\e[38;5;244m"     # Slate/Grey (Clean Labels)
-VALUE="\e[38;5;81m"      # Soft Cyan/Blue (Data Focus)
-BOLD="\e[1m"
-RESET="\e[0m"
-
-# --- Updated Display ---
-echo -e "${LABEL}${BOLD}▸ OS:           ${RESET}${VALUE}${os_info}${RESET}"
-echo -e "${LABEL}${BOLD}▸ Architecture: ${RESET}${VALUE}${arch_info}${RESET}"
-echo -e "${LABEL}${BOLD}▸ Kernel:       ${RESET}${VALUE}${kernel_info}${RESET}"
-echo -e "${LABEL}${BOLD}▸ Memory:       ${RESET}${VALUE}${mem_info}${RESET}"
-echo -e "${LABEL}${BOLD}▸ Disk Space:   ${RESET}${VALUE}${disk_info}${RESET}"
+    echo -e "${CYAN}${BOLD}OS:${RESET} ${GREEN}${os_info}${RESET}"
+    echo -e "${CYAN}${BOLD}Architecture:${RESET} ${GREEN}${arch_info}${RESET}"
+    echo -e "${CYAN}${BOLD}Kernel:${RESET} ${GREEN}${kernel_info}${RESET}"
+    echo -e "${CYAN}${BOLD}Memory:${RESET} ${GREEN}${mem_info}${RESET}"
+    echo -e "${CYAN}${BOLD}Disk Space:${RESET} ${GREEN}${disk_info}${RESET}"
     
     # Check system requirements
     _check_system_requirements
