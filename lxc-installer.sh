@@ -990,5 +990,6 @@ main_controller() {
  startup_menu
 }
 
-# ---------- START ----------
+# ---------- START ----------u
+cat << "EOF"
 main_controller
