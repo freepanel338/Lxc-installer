@@ -369,7 +369,7 @@ run_with_spinner() {
     local style_index=$((RANDOM % ${#styles[@]}))
     local style="${styles[style_index]}"
     
-    while [ $retry_count -le $MAX_RETRIES ] do
+   retry_count=${retry_count:-0}; while [ "$retry_count" -le "$MAX_RETRIES" ]; do
         _start_spinner "$desc" "$style"
         
         if "${cmd[@]}" >> "$INSTALL_LOG" 2>&1; then
