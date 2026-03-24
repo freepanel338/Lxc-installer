@@ -1,123 +1,142 @@
 #!/usr/bin/env bash
+
 # ==========================================
-#   🚀 SAGAR GAMING 2X - ALL IN ONE TOOL
+# 🚀 RyomenNodes LXC Installer
+# made by PrimeNexus
+# Credit: FreePanel338
 # ==========================================
 
-set -u
+# ===== COLORS =====
+RED="\e[38;5;196m"
+GREEN="\e[38;5;46m"
+YELLOW="\e[38;5;226m"
+BLUE="\e[38;5;33m"
+CYAN="\e[38;5;51m"
+MAGENTA="\e[38;5;201m"
+WHITE="\e[97m"
+GRAY="\e[38;5;240m"
+RESET="\e[0m"
 
-# --- ANSI COLORS ---
-C=$'\033[36m'  # Cyan
-G=$'\033[32m'  # Green
-R=$'\033[31m'  # Red
-B=$'\033[34m'  # Blue
-Y=$'\033[33m'  # Yellow
-W=$'\033[97m'  # White
-N=$'\033[0m'   # Reset
-
-# --- HEADER FUNCTION ---
+# ===== HEADER =====
 header() {
     clear
-    echo -e "${B}  __  __       _         __  __                  ${N}"
-    echo -e "${B} |  \/  | __ _(_)_ __   |  \/  | ___ _ __  _   _ ${N}"
-    echo -e "${B} | |\/| |/ _\` | | '_ \  | |\/| |/ _ \ '_ \| | | |${N}"
-    echo -e "${B} | |  | | (_| | | | | | | |  | |  __/ | | | |_| |${N}"
-    echo -e "${B} |_|  |_|\__,_|_|_| |_| |_|  |_|\___|_| |_|\__,_|${N}"
-    echo -e "${B}=====================================================${N}"
-    echo -e "${Y}      🚀 Subscribe To Sagar Gaming 2X      ${N}"
-    echo -e "${B}=====================================================${N}"
-    echo ""
+    echo -e "${BLUE}"
+    echo "╔══════════════════════════════════════════════╗"
+    echo "║           RyomenNodes LXC Installer          ║"
+    echo "║            made by PrimeNexus 🔥             ║"
+    echo "║          Credit: FreePanel338               ║"
+    echo "╚══════════════════════════════════════════════╝"
+    echo -e "${RESET}"
 }
 
-# --- PAUSE FUNCTION ---
+# ===== PAUSE =====
 pause() {
     echo ""
-    read -p "${W}Press [Enter] to return to menu...${N}" dummy
+    read -p "Press Enter to continue..."
 }
 
-# --- MAIN LOOP ---
-while true; do
-    header
-    echo -e "${C} 1) ${W}Dependency Installer ${G}(Node + Mineflayer)${N}"
-    echo -e "${C} 2) ${W}Bot Maker ${G}(Create app.js)${N}"
-    echo -e "${C} 3) ${W}Auto Restarter Setup ${G}(Systemd Service)${N}"
-    echo -e "${C} 4) ${W}Bot Remover ${G}(Manager)${N}"
-    echo -e "${C} 5) ${W}Discord Server Link${N}"
-    echo -e "${C} 6) ${W}YouTube Channel Link${N}"
-    echo -e "${C} 7) ${W}VM Installer ${G}(IDX VPS)${N}"
-    echo -e "${C} 8) ${W}RDP Installer ${G}(Desktop Environment)${N}"
-    echo -e "${C} 9) ${W}Tailscale Installer ${G}(VPN)${N}"
-    echo -e "${R} 10) Exit${N}"
-    echo ""
-    echo -e "${B}=====================================================${N}"
-    read -p "${Y}👉 Select an option [1-10]: ${N}" choice
+# ===== LOADING =====
+loading() {
+    echo -e "${MAGENTA}⏳ Processing...${RESET}"
+    sleep 1
+}
 
-    case $choice in
-        1)
-            echo ""
-            echo -e "${Y}🔄 Running Dependency Installer...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/refs/heads/main/dependency.sh | sed 's/\r$//' | bash
-            pause
-            ;;
-        2)
-            echo ""
-            echo -e "${Y}🛠️  Running Bot Maker...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/refs/heads/main/bot_maker.sh | sed 's/\r$//' | bash
-            pause
-            ;;
-        3)
-            echo ""
-            echo -e "${Y}⚙️  Setting up Auto Restarter...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/refs/heads/main/autorestarter.sh | sed 's/\r$//' | bash
-            pause
-            ;;
-        4)
-            echo ""
-            echo -e "${Y}🚀 Bot Remover...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/refs/heads/main/bot_remover.sh | sed 's/\r$//' | bash
-            pause
-            ;;
-        5)
-            echo ""
-            echo -e "${B}📢 Join our Discord Server:${N}"
-            echo -e "${G}🔗 https://discord.gg/ZAAyrb4J6s${N}"
-            echo ""
-            pause
-            ;;
-        6)
-            echo ""
-            echo -e "${R}📺 Subscribe to YouTube:${N}"
-            echo -e "${Y}🔗 https://www.youtube.com/@OfficialNotGamerPie${N}"
-            echo ""
-            pause
-            ;;
-        7)
-            echo ""
-            echo -e "${Y}💻 Installing VM (IDX VPS)...${N}"
-            bash <(curl -fsSL https://raw.githubusercontent.com/NotGamerPiie/idx-vps/main/vps.sh)
-            pause
-            ;;
-        8)
-            echo ""
-            echo -e "${Y}🖥️  Installing RDP...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/main/rdp_installer.sh | sed 's/\r$//' | bash
-            pause
-            ;;
-        9)
-            echo ""
-            echo -e "${Y}🌐 Installing Tailscale VPN...${N}"
-            curl -fsSL https://tailscale.com/install.sh | sh
-            pause
-            ;;
-        10)
-            echo ""
-            echo -e "${G}👋 Exiting... Thanks for using!${N}"
-            exit 0
-            ;;
-        *)
-            echo ""
-            echo -e "${R}❌ Invalid Option! Please select between 1-10.${N}"
-            sleep 2
-            ;;
-    esac
-done
-EOF
+# ===== SAFE RUN =====
+run_cmd() {
+    bash -c "$1" || echo -e "${RED}⚠ Error but continuing...${RESET}"
+}
+
+# ===== INSTALL FUNCTIONS =====
+
+install_lxc_script() {
+    header
+    loading
+    echo -e "${CYAN}Installing LXC Panel Script...${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/freepanel338/Lxc-installer/main/lxc-installer.sh)
+    pause
+}
+
+install_docker() {
+    header
+    loading
+    echo -e "${CYAN}Installing Docker...${RESET}"
+    curl -fsSL https://get.docker.com | bash
+    systemctl enable docker
+    systemctl start docker
+    echo -e "${GREEN}✔ Docker Installed${RESET}"
+    pause
+}
+
+install_portainer() {
+    header
+    loading
+    echo -e "${CYAN}Installing Portainer...${RESET}"
+    docker volume create portainer_data
+    docker run -d -p 9000:9000 --name=portainer --restart=always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v portainer_data:/data portainer/portainer-ce
+    echo -e "${GREEN}✔ Portainer Installed (Port 9000)${RESET}"
+    pause
+}
+
+install_tailscale() {
+    header
+    loading
+    echo -e "${CYAN}Installing Tailscale...${RESET}"
+    curl -fsSL https://tailscale.com/install.sh | sh
+    tailscale up
+    echo -e "${GREEN}✔ Tailscale Ready${RESET}"
+    pause
+}
+
+system_update() {
+    header
+    loading
+    echo -e "${CYAN}Updating System...${RESET}"
+    apt update -y && apt upgrade -y
+    echo -e "${GREEN}✔ System Updated${RESET}"
+    pause
+}
+
+remove_all() {
+    header
+    echo -e "${RED}Removing all installed tools...${RESET}"
+    docker rm -f portainer 2>/dev/null
+    docker volume rm portainer_data 2>/dev/null
+    apt remove docker docker.io -y
+    apt remove tailscale -y
+    echo -e "${GREEN}✔ Cleaned Successfully${RESET}"
+    pause
+}
+
+# ===== MENU =====
+main_menu() {
+    while true; do
+        header
+
+        echo -e "${CYAN}1) ${WHITE}Install LXC Panel Script${RESET}"
+        echo -e "${CYAN}2) ${WHITE}Install Docker${RESET}"
+        echo -e "${CYAN}3) ${WHITE}Install Portainer${RESET}"
+        echo -e "${CYAN}4) ${WHITE}Install Tailscale${RESET}"
+        echo -e "${CYAN}5) ${WHITE}System Update${RESET}"
+        echo -e "${CYAN}6) ${WHITE}Remove All Tools${RESET}"
+        echo -e "${RED}7) Exit${RESET}"
+
+        echo -e "${GRAY}────────────────────────────────────────────${RESET}"
+        read -p "Select option: " choice
+
+        case $choice in
+            1) install_lxc_script ;;
+            2) install_docker ;;
+            3) install_portainer ;;
+            4) install_tailscale ;;
+            5) system_update ;;
+            6) remove_all ;;
+            7) exit 0 ;;
+            *) echo -e "${RED}Invalid option!${RESET}"; sleep 1 ;;
+        esac
+    done
+}
+
+# ===== START =====
+main_menu
