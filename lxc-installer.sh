@@ -8,27 +8,22 @@ set -euo pipefail
 #=========================================================
 
 # --- Advanced Colors and Styles ---
-GREEN="\e[32m"
-YELLOW="\e[33m"
-CYAN="\e[36m"
-RED="\e[31m"
-BLUE="\e[34m"
-MAGENTA="\e[35m"
-WHITE="\e[97m"
-BOLD="\e[1m"
-DIM="\e[2m"
-ITALIC="\e[3m"
-UNDERLINE="\e[4m"
-BLINK="\e[5m"
-RESET="\e[0m"
+RED="\e[38;5;196m"
+GREEN="\e[38;5;46m"
+YELLOW="\e[38;5;226m"
+BLUE="\e[38;5;33m"
+MAGENTA="\e[38;5;201m"
+CYAN="\e[38;5;51m"
+WHITE="\e[38;5;15m"
 
 # Colorful background for better visual appeal
-BG_BLUE="\e[44m"
-BG_GREEN="\e[42m"
-BG_YELLOW="\e[43m"
-BG_RED="\e[41m"
-BG_MAGENTA="\e[45m"
-BG_CYAN="\e[46m"
+RED="\e[38;5;196m"
+GREEN="\e[38;5;46m"
+YELLOW="\e[38;5;226m"
+BLUE="\e[38;5;33m"
+MAGENTA="\e[38;5;201m"
+CYAN="\e[38;5;51m"
+WHITE="\e[38;5;15m"
 
 # Terminal dimensions
 TERM_WIDTH=$(tput cols 2>/dev/null || echo 80)
