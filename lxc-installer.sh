@@ -1,127 +1,131 @@
 #!/usr/bin/env bash
-# ==========================================
-# Made By PrimeNexus
-# ==========================================
 
-set -u
+# ================================
+#   🚀 RyomenNodes Installer
+#   made by PrimeNexus
+#   Credit: Sagar
+# ================================
 
-# --- ANSI COLORS ---
-C=$'\033[36m'  # Cyan
-G=$'\033[32m'  # Green
-R=$'\033[31m'  # Red
-B=$'\033[34m'  # Blue
-Y=$'\033[33m'  # Yellow
-W=$'\033[97m'  # White
-N=$'\033[0m'   # Reset
+set -e
 
-# --- HEADER FUNCTION ---
-header() {
-    clear
-    cat <<'EOF'
-${BLUE}${BOLD}
-  _      __   _______    _____ _   _  _____ _______       _      _      ______ _____  
- | |     \ \ / / ____|  |_   _| \ | |/ ____|__   __|/\   | |    | |    |  ____|  __ \ 
- | |      \ V / |         | | |  \| | (___    | |  /  \  | |    | |    | |__  | |__) |
- | |       > <| |         | | | .   |\___ \   | | / /\ \ | |    | |    |  __| |  _  / 
- | |____  / . \ |____    _| |_| |\  |____) |  | |/ ____ \| |____| |____| |____| | \ \ 
- |______|/_/ \_\_____|  |_____|_| \_|_____/   |_/_/    \_\______|______|______|_|  \_\
-${RESET}
-EOF
+# ===== COLORS (MODERN) =====
+C="\e[38;5;51m"
+G="\e[38;5;46m"
+R="\e[38;5;196m"
+B="\e[38;5;33m"
+Y="\e[38;5;226m"
+M="\e[38;5;201m"
+W="\e[97m"
+GRAY="\e[38;5;240m"
+N="\e[0m"
 
-    # Animated subtitle with rainbow effect
-    local subtitle="AUTO LXC + LXD INSTALLER MADE WITH ❤️ BY HOPINGBOYZ"
-    local rainbow_colors=("$RED" "$YELLOW" "$GREEN" "$CYAN" "$BLUE" "$MAGENTA")
-
-# --- PAUSE FUNCTION ---
-pause() {
-    echo ""
-    read -p "${W}Press [Enter] to return to menu...${N}" dummy
+# ===== LOADING =====
+loading() {
+    echo -e "${M}⏳ Processing...${N}"
+    sleep 1
 }
 
-# --- MAIN LOOP ---
+# ===== HEADER =====
+header() {
+    clear
+    echo -e "${B}"
+    echo "╔════════════════════════════════════════════╗"
+    echo "║            RyomenNodes Installer           ║"
+    echo "║          made by PrimeNexus 🔥             ║"
+    echo "║             Credit: Sagar                 ║"
+    echo "╚════════════════════════════════════════════╝"
+    echo -e "${N}"
+}
+
+# ===== PAUSE =====
+pause() {
+    echo ""
+    read -p "$(echo -e ${GRAY}Press\ Enter\ to\ continue...${N})"
+}
+
+# ===== MAIN LOOP =====
 while true; do
     header
+
     echo -e "${C} 1) ${W}Dependency Installer ${G}(Node + Mineflayer)${N}"
     echo -e "${C} 2) ${W}Bot Maker ${G}(Create app.js)${N}"
-    echo -e "${C} 3) ${W}Auto Restarter Setup ${G}(Systemd Service)${N}"
-    echo -e "${C} 4) ${W}Bot Remover ${G}(Manager)${N}"
-    echo -e "${C} 5) ${W}Discord Server Link${N}"
-    echo -e "${C} 6) ${W}YouTube Channel Link${N}"
+    echo -e "${C} 3) ${W}Auto Restarter ${G}(Systemd Service)${N}"
+    echo -e "${C} 4) ${W}Bot Remover${N}"
+    echo -e "${C} 5) ${W}Discord Server${N}"
+    echo -e "${C} 6) ${W}YouTube Channel${N}"
     echo -e "${C} 7) ${W}VM Installer ${G}(IDX VPS)${N}"
-    echo -e "${C} 8) ${W}RDP Installer ${G}(Desktop Environment)${N}"
-    echo -e "${C} 9) ${W}Tailscale Installer ${G}(VPN)${N}"
-    echo -e "${R} 10) Exit${N}"
-    echo ""
-    echo -e "${B}=====================================================${N}"
-    read -p "${Y}👉 Select an option [1-10]: ${N}" choice
+    echo -e "${C} 8) ${W}RDP Installer${N}"
+    echo -e "${C} 9) ${W}Tailscale VPN${N}"
+    echo -e "${R}10) Exit${N}"
+
+    echo -e "${GRAY}────────────────────────────────────────────${N}"
+    read -p "$(echo -e ${Y}👉\ Select\ option\ [1-10]:${N}) " choice
 
     case $choice in
+
         1)
-            echo ""
-            echo -e "${Y}🔄 Running Dependency Installer...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/refs/heads/main/dependency.sh | sed 's/\r$//' | bash
+            loading
+            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/main/dependency.sh | bash
             pause
             ;;
+
         2)
-            echo ""
-            echo -e "${Y}🛠️  Running Bot Maker...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/refs/heads/main/bot_maker.sh | sed 's/\r$//' | bash
+            loading
+            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/main/bot_maker.sh | bash
             pause
             ;;
+
         3)
-            echo ""
-            echo -e "${Y}⚙️  Setting up Auto Restarter...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/refs/heads/main/autorestarter.sh | sed 's/\r$//' | bash
+            loading
+            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/main/autorestarter.sh | bash
             pause
             ;;
+
         4)
-            echo ""
-            echo -e "${Y}🚀 Bot Remover...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/refs/heads/main/bot_remover.sh | sed 's/\r$//' | bash
+            loading
+            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/main/bot_remover.sh | bash
             pause
             ;;
+
         5)
-            echo ""
-            echo -e "${B}📢 Join our Discord Server:${N}"
-            echo -e "${G}🔗 https://discord.gg/ZAAyrb4J6s${N}"
-            echo ""
+            echo -e "\n${B}📢 Discord Server:${N}"
+            echo -e "${G}https://discord.gg/ZAAyrb4J6s${N}"
             pause
             ;;
+
         6)
-            echo ""
-            echo -e "${R}📺 Subscribe to YouTube:${N}"
-            echo -e "${Y}🔗 https://www.youtube.com/@OfficialNotGamerPie${N}"
-            echo ""
+            echo -e "\n${R}📺 YouTube Channel:${N}"
+            echo -e "${Y}https://www.youtube.com/@OfficialNotGamerPie${N}"
             pause
             ;;
+
         7)
-            echo ""
-            echo -e "${Y}💻 Installing VM (IDX VPS)...${N}"
+            loading
             bash <(curl -fsSL https://raw.githubusercontent.com/NotGamerPiie/idx-vps/main/vps.sh)
             pause
             ;;
+
         8)
-            echo ""
-            echo -e "${Y}🖥️  Installing RDP...${N}"
-            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/main/rdp_installer.sh | sed 's/\r$//' | bash
+            loading
+            curl -fsSL https://raw.githubusercontent.com/Sagargamin/INSTALLER-REPO/main/rdp_installer.sh | bash
             pause
             ;;
+
         9)
-            echo ""
-            echo -e "${Y}🌐 Installing Tailscale VPN...${N}"
+            loading
             curl -fsSL https://tailscale.com/install.sh | sh
+            echo -e "${G}✔ Tailscale Installed!${N}"
             pause
             ;;
+
         10)
-            echo ""
-            echo -e "${G}👋 Exiting... Thanks for using!${N}"
+            echo -e "\n${G}👋 Exiting... Thanks for using RyomenNodes!${N}"
             exit 0
             ;;
+
         *)
-            echo ""
-            echo -e "${R}❌ Invalid Option! Please select between 1-10.${N}"
-            sleep 2
+            echo -e "\n${R}❌ Invalid option!${N}"
+            sleep 1
             ;;
     esac
 done
-EOF
